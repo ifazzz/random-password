@@ -3,9 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Random Password</title>
 </head>
 <body>
-    
+    <div class="container">
+        <h1>Generate a <br><span>Random Password</span></h1>
+
+        <div class="number-box">
+            <input type="number" id="number" max="30" min="0" placeholder="Enter your number">
+        </div>
+
+        
+        <div class="type-box">
+            <select id="type">
+                <option value="number">Number</option>
+                <option value="string">String</option>
+                <option value="mix">Mix</option>
+            </select>
+        </div>
+
+        <div class="display">
+            <input type="text" id="password" placeholder="Password">
+            <img src="copy.png" onclick="copyPassword()">
+        </div>
+
+        <button onclick="createPassword()"><img src="generate.png">Generate Password</button>
+
+    </div>
+    <script>
+        const numberBox = document.getElementById("number"); 
+        const typeBox = document.getElementById("type");
+        const passwordBox = document.getElementById("password");
+
+        function createPassword(){ 
+
+        const length = parseInt(numberBox.value) || 8;
+        const selectedType = typeBox.value;
+
+        const upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const lowerCase = "abcdefghijklmnopqrstuvwxyz";
+        const numbers = "0123456789"
+        const symbols = "@#$%^&*()_+~|}{[]><-=";
+
+        let allChars = "";
+        if (selectedType === "string") {
+            allChars = upperCase + lowerCase;
+        } else if (selectedType === "number") {
+            allChars = numbers;
+        } else {
+            allChars = upperCase + lowerCase + numbers + symbols;
+        }
+
+        let password = "";
+            for (let i = 0; i < length; i++) {
+            password += allChars[Math.floor(Math.random() * allChars.length)];
+        }
+            passwordBox.value = password;
+        }
+        function copyPassword() {
+            passwordBox.select();
+            document.execCommand("copy");
+        }
+    </script>
 </body>
 </html>
